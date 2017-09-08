@@ -15,6 +15,7 @@ class QuestionViewController: UIViewController {
     
     @IBOutlet weak var questionCountLabel: UILabel!
     @IBOutlet var choiceButtons: [UIButton]!
+    @IBOutlet weak var progressView: UIProgressView!
     
     var distribution: GKShuffledDistribution? // 讓裡面無值
     var questionCount = 0 // 題號
@@ -25,6 +26,7 @@ class QuestionViewController: UIViewController {
     func nextQuestion() {
         number = distribution!.nextInt()
         questionCount = questionCount + 1
+        progressView.progress += 0.125
         if questionCount == questions.count + 1 { // 題庫總共有九題，當button pressed按下去要到第10，才會顯示得分頁面
             performSegue(withIdentifier: "showResult", sender: nil)
         }else{
@@ -60,6 +62,7 @@ class QuestionViewController: UIViewController {
         number = distribution!.nextInt()
         questionCount = 1 // 使出題數量
         score = 0
+        progressView.progress = 0
         updateUI()
     }
     
@@ -71,6 +74,7 @@ class QuestionViewController: UIViewController {
         distribution = GKShuffledDistribution(lowestValue: 0, highestValue: questions.count - 1)
         number = distribution!.nextInt()
         questionCount = questionCount + 1
+        progressView.progress = 0
         updateUI()
         print(questions.count)
     }
